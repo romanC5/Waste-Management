@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Recycle, Clock, Phone, MapPin, AlertTriangle, Info, Menu, X, Leaf } from 'lucide-react';
 import RecyclingCenters from './components/RecyclingCenters';
 import WasteGuide from './components/WasteGuide';
@@ -58,13 +58,13 @@ function App() {
       {showPopup && <WelcomePopup onClose={() => setShowPopup(false)} />}
 
       {/* Header */}
-      <header className="bg-white shadow-md relative">
+      <header className="bg-white shadow-md relative sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 cursor-pointer">
               <Leaf className="h-8 w-8 text-green-600 cursor-pointer" />
               <h1 className="text-2xl font-bold text-gray-800">
-                <button className='cursor-pointer'  onClick={() => handleTabChange('Land')}>EcoWise</button>
+                <button className="cursor-pointer" onClick={() => handleTabChange('Land')}>EcoWise</button>
               </h1>
             </div>
 

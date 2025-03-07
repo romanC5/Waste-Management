@@ -16,7 +16,7 @@ function WelcomePopup({ onClose }) {
         </div>
 
         {/* Content */}
-        <div className="p-6 md:p-8">
+        <div className="p-6 md:p-8 h-160">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-green-100 p-3 rounded-full">
               <Leaf className="h-8 w-8 text-green-600" />
@@ -28,6 +28,10 @@ function WelcomePopup({ onClose }) {
           </h2>
 
           <div className="space-y-4 text-gray-600">
+          <p className="text-center">
+          Ecowise is a waste management webapp aimed to clean our environment and create a hygienic surrounding for the citizens to live on a clean environment.  
+            </p>
+
             <p className="text-center">
               Your one-stop solution for responsible waste management and environmental care.
             </p>
