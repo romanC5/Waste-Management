@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Trash2, Recycle, Battery, Box, Newspaper, Wine, X } from 'lucide-react';
+// Predefined Tailwind color map to solve dynamic class issues
+const colorClasses = {
+  blue: { bg: 'bg-blue-100', text: 'text-blue-600' },
+  red: { bg: 'bg-red-100', text: 'text-red-600' },
+  green: { bg: 'bg-green-100', text: 'text-green-600' },
+  yellow: { bg: 'bg-yellow-100', text: 'text-yellow-600' },
+  purple: { bg: 'bg-purple-100', text: 'text-purple-600' }
+};
 
 const wasteCategories = [
   {
-    icon: <Recycle className="h-6 w-6 text-green-500" />,
+    icon: <Recycle className="h-6 w-6 " />,
     title: 'Recyclables',
     description: 'Paper, cardboard, plastic containers, glass bottles, and metal cans',
     tips: 'Rinse containers before recycling. Remove caps and lids.',
@@ -32,7 +40,7 @@ const wasteCategories = [
     }
   },
   {
-    icon: <Battery className="h-6 w-6 text-red-600" />,
+    icon: <Battery className="h-6 w-6" />,
     title: 'Hazardous Waste',
     description: 'Batteries, electronics, chemicals, and paint',
     tips: 'Never mix different types of hazardous waste. Keep in original containers when possible.',
@@ -122,7 +130,7 @@ const wasteCategories = [
     }
   },
   {
-    icon: <Wine className="h-6 w-6 text-blue-500" />,
+    icon: <Wine className="h-6 w-6" />,
     title: 'Glass',
     description: 'Bottles, jars, and other glass containers',
     tips: 'Separate by color. Remove caps and rinse containers.',
@@ -166,7 +174,7 @@ function DetailPopup({ category, onClose }) {
         <div className="p-6 md:p-8">
           <div className="flex items-center space-x-4 mb-6">
             <div className={`p-3 rounded-full bg-${category.color}-100 text-${category.color}-600`}>
-              {category.icon}
+              {category.icon && React.cloneElement(category.icon, { className: `h-6 w-6 text-${category.color}-600` })}
             </div>
             <h2 className="text-2xl font-bold text-gray-800">{category.title}</h2>
           </div>
@@ -222,14 +230,16 @@ function DetailPopup({ category, onClose }) {
 
 function WasteGuide() {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [zoomedCard, setZoomedCard] = useState(null);
+
+  const handleCardClick = (category) => {
+    setSelectedCategory(category);
+    setZoomedCard(category.title);
+  };
 
   return (
     <div className="space-y-8">
-      <div className='text-center'>
-        <h2>How We Works</h2>
-
-      </div>
-
+      
       <div className="text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Waste Management Guide</h2>
         <p className="mt-2 text-gray-600 text-sm md:text-base">Learn how to properly sort and dispose of different types of waste</p>
@@ -239,11 +249,13 @@ function WasteGuide() {
         {wasteCategories.map((category) => (
           <button
             key={category.title}
-            onClick={() => setSelectedCategory(category)}
-            className="bg-white rounded-lg shadow-md p-4 md:p-6 hover:shadow-lg transition text-left w-full"
+            onClick={() => handleCardClick(category)}
+            className={`zoomable-card bg-white rounded-lg shadow-md p-4 md:p-6 hover:shadow-lg transition text-left w-full ${
+              zoomedCard === category.title ? 'zoomed' : ''
+            }`}
           >
             <div className={`inline-block p-3 rounded-full bg-${category.color}-100 text-${category.color}-600 mb-4`}>
-              {category.icon}
+              {category.icon && React.cloneElement(category.icon, { className: `h-6 w-6 text-${category.color}-600` })}
             </div>
             <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">{category.title}</h3>
             <p className="text-sm md:text-base text-gray-600 mb-4">{category.description}</p>

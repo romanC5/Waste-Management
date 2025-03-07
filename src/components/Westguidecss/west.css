@@ -1,0 +1,8 @@
+.zoomable-image {
+    transition: transform 0.25s ease;
+    cursor: pointer;
+  }
+  
+  .zoomable-image.zoomed {
+    transform: scale(3.5); /* Adjust the scale factor as needed */
+  }

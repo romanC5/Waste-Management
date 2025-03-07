@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Recycle, Clock, Phone, MapPin, AlertTriangle, Info, Menu, X, Leaf } from 'lucide-react';
 import RecyclingCenters from './components/RecyclingCenters';
 import WasteGuide from './components/WasteGuide';
@@ -7,9 +7,11 @@ import WelcomePopup from './components/WelcomePopup';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import Contact from './components/Contact';
+import Chatbot from './components/Chatbot';
+import Landing from './components/Landing';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('guide');
+  const [activeTab, setActiveTab] = useState('Land'); // Set 'Land' as the default active tab
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
   const [currentPage, setCurrentPage] = useState('main');
@@ -31,6 +33,7 @@ function App() {
 
   const renderMainContent = () => (
     <main className="max-w-7xl mx-auto px-4 py-8">
+      {activeTab === 'Land' && <Landing />}
       {activeTab === 'guide' && <WasteGuide />}
       {activeTab === 'centers' && <RecyclingCenters />}
       {activeTab === 'report' && <ReportDumping />}
@@ -53,19 +56,22 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
       {showPopup && <WelcomePopup onClose={() => setShowPopup(false)} />}
-      
+
       {/* Header */}
       <header className="bg-white shadow-md relative">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Leaf className="h-8 w-8 text-green-600" />
-              <h1 className="text-2xl font-bold text-gray-800">EcoWise</h1>
+            <div className="flex items-center space-x-3 cursor-pointer">
+              <Leaf className="h-8 w-8 text-green-600 cursor-pointer" />
+              <h1 className="text-2xl font-bold text-gray-800">
+                <button className='cursor-pointer'  onClick={() => handleTabChange('Land')}>EcoWise</button>
+              </h1>
             </div>
-            
+
             {/* Mobile menu button */}
             <button
               onClick={toggleMenu}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition"
             >
               {isMenuOpen ? (
@@ -85,7 +91,7 @@ function App() {
                     : 'text-gray-600 hover:bg-green-50'
                 }`}
               >
-                <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center space-x-2 cursor-pointer ">
                   <Info className="h-4 w-4" />
                   <span>Waste Guide</span>
                 </div>
@@ -98,7 +104,7 @@ function App() {
                     : 'text-gray-600 hover:bg-green-50'
                 }`}
               >
-                <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center space-x-2 cursor-pointer ">
                   <MapPin className="h-4 w-4" />
                   <span>Recycling Centers</span>
                 </div>
@@ -111,7 +117,7 @@ function App() {
                     : 'text-gray-600 hover:bg-green-50'
                 }`}
               >
-                <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center space-x-2 cursor-pointer ">
                   <AlertTriangle className="h-4 w-4" />
                   <span>Report Dumping</span>
                 </div>
@@ -170,6 +176,9 @@ function App() {
 
       {/* Main Content */}
       {renderPage()}
+
+      {/* Chatbot */}
+      <Chatbot />
 
       {/* Footer */}
       <footer className="bg-white mt-auto">
