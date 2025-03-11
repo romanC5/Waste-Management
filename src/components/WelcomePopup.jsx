@@ -3,7 +3,7 @@ import { X, Leaf } from 'lucide-react';
 
 function WelcomePopup({ onClose }) {
   return (
-    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center p-4 z-[100]">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full relative overflow-hidden">
         {/* Close Button */}
         <div className="absolute top-4 right-4">
